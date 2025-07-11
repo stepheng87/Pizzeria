@@ -11,7 +11,7 @@ class Pizza(models.Model):
         ('cheese', 'Cheese'),
     ]
     
-    pizza_name = models.CharField(max_length=200,choices=pizzas,default='Cheese')
+    pizza_name = models.CharField(max_length=200,choices=pizzas,default='cheese')
 
     def __str__(self):
         return self.pizza_name
@@ -19,15 +19,8 @@ class Pizza(models.Model):
 
 
 class Topping(models.Model):
-    pizza = [
-        ('supreme', 'Supreme'),
-        ('veggie', 'Veggie'),
-        ('meat_lovers', 'Meat Lovers'),
-        ('hawaiian', 'Hawaiian'),
-        ('cheese', 'Cheese'),
-    ]
 
-    topping_name = [
+    toppings = [
         ('pepperoni', 'Pepperoni'),
         ('sausage', 'Sausage'),
         ('hamburger', 'Hamburger'),
@@ -40,8 +33,22 @@ class Topping(models.Model):
         ('bacon', 'Bacon'),
     ]
 
-    pizza = models.CharField(max_length=200, choices=pizza, default='Cheese')
-    topping_name = models.CharField(max_length=200, choices=topping_name, default='3 Cheese Blend')
+    pizza = models.ForeignKey(Pizza,on_delete=models.CASCADE)
+    topping_name = models.CharField(max_length=200,choices=toppings,default='cheese_blend')
 
     def __str__(self):
         return f"{self.pizza} - {self.topping_name}"
+    
+
+class Comment(models.Model):
+
+    product = models.ForeignKey(Pizza,on_delete=models.CASCADE)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+
+        verbose_name_plural = "comments"
+
+    def __str__(self):
+        return f"{self.text[:20]}..."
