@@ -11,7 +11,7 @@ class Pizza(models.Model):
         ('cheese', 'Cheese'),
     ]
     
-    pizza_name = models.CharField(max_length=200,choices=pizzas)
+    pizza_name = models.CharField(max_length=200,choices=pizzas, default='Cheese')
 
     def __str__(self):
         return self.pizza_name
@@ -40,8 +40,8 @@ class Topping(models.Model):
         ('bacon', 'Bacon'),
     ]
 
-    pizza = models.CharField(max_length=200, choices=pizza)
-    topping_name = models.CharField(max_length=200, choices=topping_name)
+    pizza = models.CharField(max_length=200, choices=pizza, default='Cheese')
+    topping_name = models.CharField(max_length=200, choices=topping_name, default='3 Cheese Blend')
 
     def __str__(self):
         return f"{self.pizza} - {self.topping_name}"
