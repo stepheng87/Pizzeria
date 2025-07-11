@@ -11,7 +11,7 @@ class Pizza(models.Model):
         ('cheese', 'Cheese'),
     ]
     
-    pizza_name = models.CharField(max_length=200,choices=pizzas, default='Cheese')
+    pizza_name = models.CharField(max_length=200,choices=pizzas,default='Cheese')
 
     def __str__(self):
         return self.pizza_name
