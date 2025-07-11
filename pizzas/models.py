@@ -13,6 +13,8 @@ class Pizza(models.Model):
     
     pizza_name = models.CharField(max_length=200,choices=pizzas,default='cheese')
 
+    pizza_image = models.ImageField(upload_to='pizza_images/',blank=True,null=True,help_text="Upload an image of this pizza")
+
     def __str__(self):
         return self.pizza_name
 
@@ -33,7 +35,7 @@ class Topping(models.Model):
         ('bacon', 'Bacon'),
     ]
 
-    pizza = models.ForeignKey(Pizza,on_delete=models.CASCADE)
+    pizza = models.ForeignKey(Pizza,on_delete=models.CASCADE,related_name='toppings')
     topping_name = models.CharField(max_length=200,choices=toppings,default='cheese_blend')
 
     def __str__(self):
@@ -42,13 +44,14 @@ class Topping(models.Model):
 
 class Comment(models.Model):
 
-    product = models.ForeignKey(Pizza,on_delete=models.CASCADE)
+    product = models.ForeignKey(Pizza,on_delete=models.CASCADE,related_name='comments')
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
 
         verbose_name_plural = "comments"
+        ordering = ['-date_added']
 
     def __str__(self):
         return f"{self.text[:20]}..."

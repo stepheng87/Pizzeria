@@ -1,2 +1,53 @@
-<p>Pizza</p>
-<p>Pizza is the best!!!</p>
+{% extends "pizzas/base.html" %}
+
+{% block title %}Welcome to Pizzeria{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-image: url('/media/other_images/homepage_background.jpg');
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+    }
+    
+    .welcome-box {
+        background-position: center;
+        background-color: rgba(163, 160, 160, 0.9);
+        padding: 3rem;
+        text-align: center;
+        max-width: 600px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    h1 {
+        color: rgb(187, 20, 20);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .cta-button {
+        display: inline-block;
+        background-color: #363434;
+        color: rgb(243, 9, 9);
+        padding: 1rem 2rem;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        margin-top: 1rem;
+    }
+    
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="welcome-box">
+    <h1>Welcome to Pizzeria!</h1>
+    <p>The best pizza in town, made with love and fresh ingredients.</p>
+    <a href="{% url 'pizzas:pizzas' %}" class="cta-button">View Our Pizzas</a>
+</div>
+{% endblock %}

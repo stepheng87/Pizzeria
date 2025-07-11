@@ -1,4 +1,54 @@
-<p>
- <a href="{% url 'pizzas:index' %}">Pizzeria</a>
-</p>
- {% block content %}{% endblock content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pizzeria{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .navbar {
+            background-image: url('/media/other_images/pizza_pages_banner.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 1.5rem;
+            color: white;
+            height: 30px;
+        }
+        
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        
+        .content {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'pizzas:index' %}">Pizzeria Home</a>
+        <a href="{% url 'pizzas:pizzas' %}">Our Pizzas</a>
+    </div>
+    
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
