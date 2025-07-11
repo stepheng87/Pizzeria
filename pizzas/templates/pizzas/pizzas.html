@@ -64,14 +64,14 @@
         {% for pizza in pizzas %}
         <div class="pizza-card">
             {% if pizza.pizza_image %}
-                <img src="{{ pizza.pizza_image.url }}" alt="{{ pizza.pizza_name }}" class="pizza-image">
+                <img src="{{ pizza.pizza_image.url }}" alt="{{ pizza.get_pizza_name_display }}" class="pizza-image">
             {% else %}
                 <div style="height: 200px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
                     <p>No image available</p>
                 </div>
             {% endif %}
             
-            <h2 class="pizza-name">{{ pizza.pizza_name }}</h2>
+            <h2 class="pizza-name">{{ pizza.get_pizza_name_display }}</h2>
             
             {% if pizza.description %}
                 <p>{{ pizza.description }}</p>

@@ -1,0 +1,192 @@
+{% extends "pizzas/base.html" %}
+
+{% block title %}{{ pizza.get_pizza_name_display }} - Pizzeria{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-image: url('/media/other_images/pizza_pages_background.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+    }
+    
+    .detail-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: rgba(255, 255, 255, 0.95);
+    }
+    
+    .pizza-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .pizza-image-large {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+    }
+    
+    .pizza-info h1 {
+        color: #d32f2f;
+        margin-bottom: 1rem;
+    }
+    
+    .toppings {
+        background-color: #f5f5f5;
+        padding: 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .topping-item {
+        display: inline-block;
+        background-color: #d32f2f;
+        color: white;
+        padding: 0.5rem 1rem;
+        margin: 0.25rem;
+    }
+    
+    .comments-section {
+        margin-top: 3rem;
+        border-top: 2px solid #ddd;
+        padding-top: 2rem;
+    }
+    
+    .comment-form {
+        background-color: #f5f5f5;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+    }
+    
+    .form-group textarea {
+        height: 100px;
+        resize: vertical;
+    }
+    
+    .submit-btn {
+        background-color: #d32f2f;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    
+    .submit-btn:hover {
+        background-color: #b71c1c;
+    }
+    
+    .comment {
+        background-color: #f9f9f9;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-left: 3px solid #d32f2f;
+    }
+    
+    .comment-header {
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+    
+    .comment-date {
+        color: #666;
+        font-size: 0.9rem;
+        font-weight: normal;
+    }
+    
+    @media (max-width: 768px) {
+        .pizza-header {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <div class="pizza-header">
+        <div>
+            {% if pizza.pizza_image %}
+                <img src="{{ pizza.pizza_image.url }}" alt="{{ pizza.get_pizza_name_display }}" class="pizza-image-large">
+            {% else %}
+                <div style="height: 400px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                    <p>No image available</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="pizza-info">
+            <h1>{{ pizza.get_pizza_name_display }}</h1>
+            {% if pizza.description %}
+                <p>{{ pizza.description }}</p>
+            {% else %}
+                <p>Enjoy our delicious {{ pizza.get_pizza_name_display }} pizza!</p>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="toppings">
+        <h2>Toppings</h2>
+        {% for topping in toppings %}
+            <span class="topping-item">{{ topping.get_topping_name_display }}</span>
+        {% empty %}
+            <p>No toppings have been added for this pizza yet.</p>
+        {% endfor %}
+    </div>
+    
+    <div class="comments-section">
+        <h2>Customer Comments</h2>
+        
+        <div class="comment-form">
+            <h3>Leave a Comment</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.author.label_tag }}
+                    {{ form.author }}
+                </div>
+                <div class="form-group">
+                    {{ form.text.label_tag }}
+                    {{ form.text }}
+                </div>
+                <button type="submit" class="submit-btn">Post Comment</button>
+            </form>
+        </div>
+        
+        <div class="comments-list">
+            {% for comment in comments %}
+                <div class="comment">
+                    <div class="comment-header">
+                        {{ comment.author }} 
+                        <span class="comment-date">- {{ comment.date_added|date:"M d, Y g:i A" }}</span>
+                    </div>
+                    <p>{{ comment.text }}</p>
+                </div>
+            {% empty %}
+                <p>No comments yet. Be the first to share your thoughts!</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

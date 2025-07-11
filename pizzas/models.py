@@ -16,7 +16,7 @@ class Pizza(models.Model):
     pizza_image = models.ImageField(upload_to='pizza_images/',blank=True,null=True,help_text="Upload an image of this pizza")
 
     def __str__(self):
-        return self.pizza_name
+        return self.get_pizza_name_display()
 
 
 
@@ -39,7 +39,7 @@ class Topping(models.Model):
     topping_name = models.CharField(max_length=200,choices=toppings,default='cheese_blend')
 
     def __str__(self):
-        return f"{self.pizza} - {self.topping_name}"
+        return f"{self.pizza.get_pizza_name_display()} - {self.get_topping_name_display()}"
     
 
 class Comment(models.Model):
